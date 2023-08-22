@@ -1,0 +1,29 @@
+<div>
+  <h4>Registered Users</h4>
+<table class="table table-success table-striped">
+  <thead>
+    <tr>
+      <th>Full Name</th>
+      <th>Phone Number</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Relationship Status</th>
+        <th>Visited Cities</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.fullName }}</td>
+      <td>{{ user.phoneNumber }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.gender }}</td>
+        <td>{{ user.age }}</td>
+        <td>{{ user.relationshipStatus }}</td>
+        <td>{{ user.visitedCities.join(', ') }}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
