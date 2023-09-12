@@ -3,27 +3,27 @@
 <table class="table table-success table-striped">
   <thead>
     <tr>
-      <th>Full Name</th>
+      <th>ID</th>
+      <th>firstName</th>
+      <th>lastName</th>
       <th>Phone Number</th>
         <th>Email</th>
-        <th>Gender</th>
-        <th>Age</th>
-        <th>Relationship Status</th>
-        <th>Visited Cities</th>
+        <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users">
-      <td>{{ user.fullName }}</td>
-      <td>{{ user.phoneNumber }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.gender }}</td>
-        <td>{{ user.age }}</td>
-        <td>{{ user.relationshipStatus }}</td>
-        <td>{{ user.visitedCities.join(', ') }}</td>
+    <tr *ngFor="let person of persons;let i=index">
+      <td>{{ person.id }}</td>
+      <td>{{ person.firstName }}</td>
+      <td>{{ person.lastName }}</td>
+      <td>{{ person.phoneNumber }}</td>
+        <td>{{ person.email }}</td>
+        <td>
+          <button class="btn btn-danger" (click)="delete(i)">Delete</button>
+          <button class="btn btn-warning" (click)="edit(person, i)">Edit</button>
+        </td>
+
     </tr>
   </tbody>
 </table>
 </div>
-
-

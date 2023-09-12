@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
-interface User {
-  fullName: string;
-  phoneNumber: number;
-  email: string;
-  gender: string;
-  age: number;
-  relationshipStatus: string;
-  visitedCities: string[];
-}
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from './user.interface';
 
 @Component({
   selector: 'app-root',
@@ -15,18 +8,29 @@ interface User {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  submitted: boolean = false;
-  users: User[] = [];
-  onFormSubmitted(formData: any) {
-    this.submitted = true;
-    this.users.push({
-      fullName: `${formData.firstName} ${formData.lastName}`,
-      phoneNumber: formData.phoneNumber,
-      email: formData.email ,
-      gender: formData.gender ,
-      age: formData.age ,
-      relationshipStatus: formData.relationshipStatus ,
-      visitedCities: formData.visitedCities
-    });
+  persons: User[] = [];
+  editPerson: any = null;
+
+  constructor() {
+  }
+
+  add(user: any) {
+    let index = this.persons.findIndex((person: any) => person.id === user.id);
+    if (index !== -1) {
+      this.persons[index] = user;
+      return;
+    } else {
+      this.persons.push(user);
+    }
+  }
+
+  delete(index: number) {
+    this.persons.splice(index, 1);
+  }
+
+  editReq(event: { person: User, index: any }) {
+    this.editPerson = {...event.person};
+    console.log(this.editPerson);
+
   }
 }

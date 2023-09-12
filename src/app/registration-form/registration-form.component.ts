@@ -1,41 +1,44 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component,EventEmitter,Output,Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from '../user.interface';
 
-interface FormData {
-  firstName: string;
-  lastName: string;
-  phoneNumber: number;
-  email: string;
-  gender: string;
-  age: number;
-  relationshipStatus: string;
-  visitedCities: string[];
-}
 @Component({
   selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.css']
 })
 export class RegistrationFormComponent {
-  registrationForm: FormGroup;
-  cities: string[] = ['Abbottabad', 'Mansehra', 'Muree', 'Naran', 'Shogran', 'Islamabad', 'Lahore', 'Karachi', 'Peshawar', 'Quetta'];
-  @Output() formSubmitted = new EventEmitter<FormData>();
-  constructor(private formBuilder: FormBuilder) {
-    this.registrationForm = this.formBuilder.group({
+  isUpdated: boolean = false;
+  @Output() addUser = new EventEmitter<any>();
+  @Input() persons: User[] = [];
+  @Input() set editUser(value: any) {
+    if (value) {
+      this.isUpdated = true;
+      this.personForm.setValue(value);
+    }
+}
+  currentIndex: any;
+  personForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.personForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       phoneNumber: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      gender: [''],
-      age: [''],
-      relationshipStatus: [''],
-      visitedCities: [[]]
+      email: [''],
+      id: []
     });
+
   }
-  onSubmit() {
-    if (this.registrationForm.valid) {
-      this.formSubmitted.emit(this.registrationForm.value);
-      this.registrationForm.reset();
+
+  add() {
+    if (!this.personForm.controls['id'].value) {
+      this.personForm.controls['id'].setValue(Math.random().toString(16).slice(2));
     }
+    this.addUser.emit(this.personForm.value);
+    this.isUpdated = false;
+    this.personForm.reset();
   }
+
+
 }

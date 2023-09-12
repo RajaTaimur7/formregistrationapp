@@ -5,11 +5,11 @@ import { AppComponent } from './app.component';
 import { RegistrationFormModule } from './registration-form/registration-form.module';
 import { UserListComponent } from './user-list/user-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 @NgModule({
   declarations: [
     AppComponent,
     UserListComponent
+
   ],
   imports: [
     BrowserModule,

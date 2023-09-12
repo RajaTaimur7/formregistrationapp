@@ -1,21 +1,13 @@
-<div class="container-fluid">
-  <nav class="navbar" style="background-color: #e3f2fd;">
-    <a class="navbar-brand fw-bold mb-2 h1 " href="#">Registration Form</a>
-  </nav>
-</div>
 
-<div class="container mt-5">
-  <app-registration-form (formSubmitted)="onFormSubmitted($event)"></app-registration-form>
-</div>
+<div class="container">
+  <app-registration-form
+  [editUser]="editPerson"
+   (addUser)="add($event)">
+  </app-registration-form>
 
-<div class="container mt-5">
-  <app-user-list *ngIf="submitted" [users]="users"></app-user-list>
-</div>
-
-<div class="container-fluid">
-  <footer class=" text-center text-lg-start" style="background-color: #e3f2fd">
-    <div class="text-center p-3">
-      <span class="text-muted fw-bold mb-2 ">© 2023 Registration Form App</span>
-    </div>
-  </footer>
+  <app-user-list
+   [persons]="persons"
+   (deleteRequested)="delete($event)"
+   (editRequested)="editReq($event)">
+  </app-user-list>
 </div>
