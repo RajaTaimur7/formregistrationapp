@@ -1,29 +1,39 @@
 <div>
-  <h4>Registered Users</h4>
-<table class="table table-success table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>firstName</th>
-      <th>lastName</th>
-      <th>Phone Number</th>
+  <button class="btn btn-primary" [routerLink]="['/form']">Add User</button>
+  <router-outlet></router-outlet>
+</div>
+<br>
+<div>
+  <h4 class="fw-bold">Registered Users</h4>
+  <table class="table table-success table-striped">
+    <thead>
+      <tr>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Phone Number</th>
         <th>Email</th>
+        <th>Gender</th>
+        <th>Age</th>
+        <th>Relationship Status</th>
+        <th>Visited Cities</th>
         <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let person of persons;let i=index">
-      <td>{{ person.id }}</td>
-      <td>{{ person.firstName }}</td>
-      <td>{{ person.lastName }}</td>
-      <td>{{ person.phoneNumber }}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let person of persons;let i=index">
+        <td>{{ person.firstName }}</td>
+        <td>{{ person.lastName }}</td>
+        <td>{{ person.phoneNumber }}</td>
         <td>{{ person.email }}</td>
+        <td>{{ person.gender }}</td>
+        <td>{{ person.age }}</td>
+        <td>{{ person.relationshipStatus }}</td>
+        <td>{{ person.visitedCities.join(', ') }}</td>
         <td>
           <button class="btn btn-danger" (click)="delete(i)">Delete</button>
-          <button class="btn btn-warning" (click)="edit(person, i)">Edit</button>
+          <button class="btn btn-warning" [routerLink]="['/form', person.id]">Edit</button>
         </td>
-
-    </tr>
-  </tbody>
-</table>
+      </tr>
+    </tbody>
+  </table>
 </div>

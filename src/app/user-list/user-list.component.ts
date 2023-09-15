@@ -1,4 +1,6 @@
-import { Component, Input ,Output,EventEmitter} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 import { User } from '../user.interface';
 
 @Component({
@@ -6,22 +8,18 @@ import { User } from '../user.interface';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.css']
 })
-export class UserListComponent {
-  @Input() persons: any[] = [];
-  @Output() deleteRequested = new EventEmitter<any>();
-  @Output() editRequested = new EventEmitter<{ person: any, index: any }>();
-
-  // No need to define delete and edit methods here
-
-  // Emit events when delete or edit is requested
-  delete(index: any) {
-    this.deleteRequested.emit(index);
+export class UserListComponent implements OnInit {
+  persons: User[] = [];
+  constructor(private userService: UserService, private router: Router) { }
+  ngOnInit() {
+    this.persons = this.userService.getUsers();
   }
-
-  edit(person: any, index: any) {
-    console.log("Edit button clicked for:", person,index);
-    this.editRequested.emit({ person, index });
-
+  delete(index: number) {
+    this.userService.deleteUser(this.persons[index]);
+    this.persons.splice(index, 1);
+  }
+  edit(person: User, index: number) {
+    console.log('Editing person:', person);
+    this.router.navigate(['/form'], { state: { user: person } });
   }
 }
-

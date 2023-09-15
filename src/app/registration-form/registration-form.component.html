@@ -3,23 +3,76 @@
     <form [formGroup]="personForm">
       <div class="form-group">
         <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" formControlName="firstName">
+        <input type="text" class="form-control" id="firstName" formControlName="firstName"
+          [ngClass]="{'is-invalid': formSubmittedWithoutRequiredFields && personForm.get('firstName')?.invalid}">
+        <div class="invalid-feedback"
+          *ngIf="formSubmittedWithoutRequiredFields && personForm.get('firstName')?.hasError('required')">
+          First Name is required.
+        </div>
       </div>
       <div class="form-group">
         <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" formControlName="lastName" >
+        <input type="text" class="form-control" id="lastName" formControlName="lastName"
+          [ngClass]="{'is-invalid': formSubmittedWithoutRequiredFields && personForm.get('lastName')?.invalid}">
+        <div class="invalid-feedback"
+          *ngIf="formSubmittedWithoutRequiredFields && personForm.get('lastName')?.hasError('required')">
+          Last Name is required.
+        </div>
       </div>
       <div class="form-group">
         <label for="phoneNumber">Phone Number</label>
-        <input type="number" class="form-control" id="phoneNumber" formControlName="phoneNumber" >
+        <input type="number" class="form-control" id="phoneNumber" formControlName="phoneNumber"
+          [ngClass]="{'is-invalid': formSubmittedWithoutRequiredFields && personForm.get('phoneNumber')?.invalid}">
+        <div class="invalid-feedback"
+          *ngIf="formSubmittedWithoutRequiredFields && personForm.get('phoneNumber')?.hasError('required')">
+          Phone Number is required.
+        </div>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" formControlName="email">
+        <input type="email" class="form-control" id="email" formControlName="email"
+          [ngClass]="{'is-invalid': formSubmittedWithoutRequiredFields && personForm.get('email')?.invalid}">
+        <div class="invalid-feedback"
+          *ngIf="formSubmittedWithoutRequiredFields && personForm.get('email')?.hasError('required')">
+          Email is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="gender">Gender</label>
+        <select class="form-control" id="gender" formControlName="gender">
+          <option value=""></option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="number" class="form-control" id="age" formControlName="age">
+      </div>
+      <div class="form-group">
+        <label for="relationshipStatus">Relationship Status</label>
+        <select class="form-control" id="relationshipStatus" formControlName="relationshipStatus">
+          <option value=""></option>
+          <option value="single">Single</option>
+          <option value="married">Married</option>
+          <option value="divorced">Divorced</option>
+          <option value="widowed">Widowed</option>
+        </select>
+      </div>
+      <br>
+      <div class="form-group">
+        <mat-form-field>
+          <mat-label for="visitedCities">Visited Cities</mat-label>
+          <mat-select multiple class="form-control" id="visitedCities" formControlName="visitedCities">
+            <mat-option *ngFor="let city of cities" [value]="city">{{ city }}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
-      <button  class="btn btn-primary" (click)="add()" *ngIf="!isUpdated">Submit</button>
-      <button  class="btn btn-warning" (click)="add()" *ngIf="isUpdated">Update</button>
+      <br>
+      <button class="btn btn-primary" (click)="add()" *ngIf="!isUpdated">Submit</button>
+      <button class="btn btn-warning" (click)="update()" *ngIf="isUpdated">Update</button>
     </form>
   </div>
 </div>

@@ -1,13 +1,15 @@
-
-<div class="container">
-  <app-registration-form
-  [editUser]="editPerson"
-   (addUser)="add($event)">
-  </app-registration-form>
-
-  <app-user-list
-   [persons]="persons"
-   (deleteRequested)="delete($event)"
-   (editRequested)="editReq($event)">
-  </app-user-list>
+<div class="container-fluid">
+  <nav class="navbar" style="background-color: #e3f2fd;">
+    <a class="navbar-brand fw-bold mb-2 h1 " href="#">Registration Form</a>
+  </nav>
+  <br>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
+  <br>
+  <footer class=" text-center text-lg-start" style="background-color: #e3f2fd">
+    <div class="text-center p-3">
+      <span class="text-muted fw-bold mb-2 ">© 2023 Registration Form App</span>
+    </div>
+  </footer>
 </div>

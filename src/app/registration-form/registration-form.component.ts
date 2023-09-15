@@ -1,44 +1,69 @@
-import { Component,EventEmitter,Output,Input } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from '../user.service';
 import { User } from '../user.interface';
-
 @Component({
   selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.css']
 })
-export class RegistrationFormComponent {
+export class RegistrationFormComponent implements OnInit {
   isUpdated: boolean = false;
-  @Output() addUser = new EventEmitter<any>();
-  @Input() persons: User[] = [];
-  @Input() set editUser(value: any) {
-    if (value) {
-      this.isUpdated = true;
-      this.personForm.setValue(value);
-    }
-}
-  currentIndex: any;
   personForm: FormGroup;
+  persons: User[] = [];
+  cities: string[] = ['Islamabad', 'Lahore', 'Peshawar', 'Karachi', 'Quetta', 'Gilgit', 'Kashmir', 'Mansehra', 'Abbottabad', 'Naran'];
+  selectedCities: FormControl = new FormControl([]);
+  formSubmittedWithoutRequiredFields = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.personForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       phoneNumber: ['', Validators.required],
-      email: [''],
-      id: []
-    });
+      email: ['', [Validators.required, Validators.email]],
+      id: [''],
+      gender: [''],
+      age: [''],
+      relationshipStatus: [''],
+      visitedCities: [[]]
 
+    });
+    this.activatedRoute.params.subscribe(params => {
+      if (params['id']) {
+        const person: any = this.userService.getUser(+params['id']);
+        if (person['id']) {
+          this.isUpdated = true;
+          this.personForm.setValue(person);
+        }
+      }
+    });
   }
+
+  ngOnInit() { }
 
   add() {
-    if (!this.personForm.controls['id'].value) {
-      this.personForm.controls['id'].setValue(Math.random().toString(16).slice(2));
+    console.log('Form valid:', this.personForm.valid);
+    if (this.personForm.valid) {
+      this.userService.addUser(this.personForm.value);
+      this.isUpdated = false;
+      this.personForm.reset();
+      this.router.navigate(['/table']);
+    } else {
+      this.formSubmittedWithoutRequiredFields = true;
     }
-    this.addUser.emit(this.personForm.value);
-    this.isUpdated = false;
-    this.personForm.reset();
   }
-
-
+  edit() {
+    this.isUpdated = false;
+    this.userService.updateUser(this.personForm.value);
+    this.router.navigate(['/table']);
+  }
+  update() {
+    this.userService.updateUser(this.personForm.value);
+    this.router.navigate(['/table']);
+  }
 }

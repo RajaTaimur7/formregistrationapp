@@ -11,26 +11,6 @@ export class AppComponent {
   persons: User[] = [];
   editPerson: any = null;
 
-  constructor() {
-  }
+  constructor() {}
 
-  add(user: any) {
-    let index = this.persons.findIndex((person: any) => person.id === user.id);
-    if (index !== -1) {
-      this.persons[index] = user;
-      return;
-    } else {
-      this.persons.push(user);
-    }
-  }
-
-  delete(index: number) {
-    this.persons.splice(index, 1);
-  }
-
-  editReq(event: { person: User, index: any }) {
-    this.editPerson = {...event.person};
-    console.log(this.editPerson);
-
-  }
 }

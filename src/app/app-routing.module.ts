@@ -4,9 +4,10 @@ import { RegistrationFormComponent } from './registration-form/registration-form
 import { UserListComponent } from './user-list/user-list.component';
 
 const routes: Routes = [
-  { path: 'registration', component: RegistrationFormComponent },
-  { path: 'users', component: UserListComponent },
-  { path: '', redirectTo: '/registration', pathMatch: 'full' },
+  { path: '', redirectTo: '/form', pathMatch: 'full' },
+  { path: 'form', component: RegistrationFormComponent },
+  { path: 'form/:id', component: RegistrationFormComponent },
+  { path: 'table', component: UserListComponent },
 ];
 
 @NgModule({
